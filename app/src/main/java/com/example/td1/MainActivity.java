@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.renderscript.RenderScript;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 import static android.graphics.Color.rgb;
 import static com.example.td1.R.id.imagetest;
+import android . renderscript . Allocation ;
 
 
 
@@ -252,6 +254,36 @@ public class MainActivity extends AppCompatActivity {
         }
         bmp.setPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
     }
+
+    //*************************************************************************************
+    //*********     TP4    ****************************************************************
+
+    public void invert (Bitmap bmp)
+    {
+
+    }
+
+    private void toGrayRS ( Bitmap bmp ) {
+        // 1) Creer un contexte RenderScript
+        RenderScript rs = RenderScript. create ( this ) ;
+        // 2) Creer des Allocations pour passer les donnees
+        Allocation input = Allocation . createFromBitmap ( rs , bmp ) ;
+        Allocation output = Allocation . createTyped ( rs , input.getType () ) ;
+        // 3) Creer le script
+        ScriptC_gray grayScript = new ScriptC_gray ( rs ) ;
+        // 4) Copier les donnees dans les Allocations
+        // ...
+        // 5) Initialiser les variables globales potentielles
+        // ...
+        // 6) Lancer le noyau
+        grayScript . forEach_toGray ( input , output ) ;
+        // 7) Recuperer les donnees des Allocation (s)
+        output . copyTo ( bmp ) ;
+        // 8) Detruire le context , les Allocation (s) et le script
+        input . destroy () ; output . destroy () ;
+        grayScript . destroy () ; rs . destroy () ;
+    }
+
     //**************************************************************************************
     //**************************************************************************************
 
