@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.renderscript.RenderScript;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,8 +23,12 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 import static android.graphics.Color.rgb;
 import static com.example.td1.R.id.imagetest;
-import android . renderscript . Allocation ;
+import android . renderscript . Allocation;
+//import androidx . support . v8 . renderscript . Allocation ;
+import androidx.renderscript.*;
 
+
+import com.android.rssample.ScriptC_gray;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -214,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         float[] hsv = new float[3];
         float[] newhsv = new float [3];
 
-        // init find value lin & max
+        // init find value min & max
         int ppixel = pixels[0];
         int pred = red(ppixel);
         int pgreen = green(ppixel);
@@ -255,17 +260,118 @@ public class MainActivity extends AppCompatActivity {
         bmp.setPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
     }
 
-    //*************************************************************************************
-    //*********     TP4    ****************************************************************
+    public int[] getHistogramme(Bitmap bmp){
+        int[] pixels= new int[bmp.getWidth()*bmp.getHeight()];
+        bmp.getPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
+        float[] hsv = new float[3];
+        int[] histogrammeTable= new int[256];
+        //initialisation de la table
+        for (int i = 0; i < 256;i++)
+        {
+            histogrammeTable[i]=0;
+        }
 
-    public void invert (Bitmap bmp)
-    {
+        for (int i = 0; i < pixels.length;i++)
+        {
+            int pixel = pixels[i];
+            int red = red(pixel);
+            int green = green(pixel);
+            int blue = blue(pixel);
+            RGBToHSV(red ,green,blue,hsv);
+            int value=Math.round(hsv[2]*255);
+            //Log.i("HG", "value: "+value);
+            histogrammeTable[value]++;
+        }
+        return histogrammeTable;
+
 
     }
 
+    public int[] getHistogrammeCumule(Bitmap bmp){
+        int[] histogrammeCumule = new int[256];
+        int[] histogrammeTable = getHistogramme(bmp);
+        int sum=0;
+        for (int i = 0; i < 256;i++)
+        {
+            sum+=histogrammeTable[i];
+            histogrammeCumule[i]=sum;
+            //Log.i("HC", "HC[i]: "+histogrammeCumule[i]);
+        }
+        return histogrammeCumule;
+    }
+    
+    public void displayHistogramme(Bitmap bmp){
+        int[] pixels= new int[bmp.getWidth()*bmp.getHeight()];
+        bmp.getPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
+        int[] histogrammeTable = getHistogramme(bmp);
+        //on test avec un histogramme bidon
+        int max=1;
+        for (int i=0; i<256;i++){
+            if (histogrammeTable[i]>max){
+                max=histogrammeTable[i];
+            }
+        }
+        //histogrammeTable = getHistogramme(bmp);
+
+        float[] hsv = new float[3];
+        hsv[0]=120;
+        hsv[1]=1;
+        hsv[2]=1;
+
+        int myColor = rgb(200,0,0);
+
+        //float countperpixelH = Math.round(bmp.getHeight()/256);
+        //float countperpixelW = Math.round(bmp.getWidth()/256);
+
+        for (int i = 0; i < 256;i++){
+            for (int j=0; j < (histogrammeTable[i]*256)/max; j++) {
+                pixels[i+((255-j)*bmp.getWidth())] = myColor;
+                //pixels[i+j*255] = myColor;
+            }
+        }
+
+        bmp.setPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
+    }
+
+    public void egalisationHistogramme (Bitmap bmp)
+    {
+        int[] pixels= new int[bmp.getWidth()*bmp.getHeight()];
+        bmp.getPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
+        int[] histogrammeTable = getHistogramme(bmp);
+        int[] histogrammeCumule = getHistogrammeCumule(bmp);
+        Log.i("HC", "HC[0]: "+histogrammeCumule[0]);
+        Log.i("HC", "HC[100]: "+histogrammeCumule[100]);
+        Log.i("HC", "HC[255]: "+histogrammeCumule[255]);
+        float[] hsv = new float[3];
+
+        for (int i = 0; i < pixels.length;i++)
+        {
+            int pixel = pixels[i];
+            int red = red(pixel);
+            int green = green(pixel);
+            int blue = blue(pixel);
+            RGBToHSV(red ,green,blue,hsv);
+            int value=Math.round(hsv[2]*255);
+            int c=histogrammeCumule[value];
+            int n =bmp.getWidth()*bmp.getHeight();
+            hsv[2]=(c)/n;
+            Log.i("HG", "c: "+c);
+            Log.i("HG", "value: "+hsv[2]);
+            pixels[i] = HSVToColor(hsv);
+
+        }
+        bmp.setPixels(pixels,0,bmp.getWidth(),0,0,bmp.getWidth(),bmp.getHeight());
+    }
+    //*************************************************************************************
+    //*********     TP4    ****************************************************************
+
+    public void invert (Bitmap bmp) {
+
+    }
+    /**
     private void toGrayRS ( Bitmap bmp ) {
         // 1) Creer un contexte RenderScript
-        RenderScript rs = RenderScript. create ( this ) ;
+        android.renderscript.RenderScript rs = RenderScript. create ( this ) ;
         // 2) Creer des Allocations pour passer les donnees
         Allocation input = Allocation . createFromBitmap ( rs , bmp ) ;
         Allocation output = Allocation . createTyped ( rs , input.getType () ) ;
@@ -283,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         input . destroy () ; output . destroy () ;
         grayScript . destroy () ; rs . destroy () ;
     }
-
+**/
     //**************************************************************************************
     //**************************************************************************************
 
@@ -321,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < bitmap.getWidth();i++){
             bitmap2.setPixel(i,32, 0x00ff44);
         }**/
-
+        getHistogramme(bitmap2);
         bg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -353,7 +459,8 @@ public class MainActivity extends AppCompatActivity {
         blc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                lowContraste(bitmap2);
+                egalisationHistogramme(bitmap2);
+                displayHistogramme(bitmap2);
             }
         });
 
