@@ -69,6 +69,7 @@ RenderScript permet de faire des calculs en parrallèle. Nous avons optimiser ce
 |                   | ToGray2()      |ToGrayRS() | 
 | :-----------:     |:-------------:| :-----:  | 
 | Temps (µs)        | 2,700       | 0 | 
+
 Je n'ai pas réussi à mesurer le temps d'éxécution de la version Renderscript avec l'outil de profilage. 
 La recherche ne permet pas de trouver la fonction.
 `invertRS`: inverse les couleurs.
@@ -79,9 +80,13 @@ La recherche ne permet pas de trouver la fonction.
 ## 5 Convolution
 Dans le dernier TP, nous avons implémenté des fonctions de convolution pour réaliser des calculs sur
 un pixel en prenant en compte ses voisins. Les filtres mis en place sont:<br />
+
 `filtreMoyeneur3x3()` : chaque pixel vaut la moyenne du pixel et de ses voisins alentours.
+
 `filtrePrewitt3x3()` : permet de faire ressortir les contours. Cette version est horizontal.
+
 `filtreSobel3x3()` : Comme prexitt avec un pondération différente.
+
 `filtreMoyenneur()` : Cette version prend en paramètre la taille du filtre. (metre un entier impair
 dans la zone text) 
 
