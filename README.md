@@ -31,7 +31,7 @@ toGray() utilisant la méthode getPixel() qui récupère les données d'un pixel
 version toGray2() utilisant la méthode getPixels(). Pour mettre en évidence l’utilité de la deuxième
 version, nous avons mesurer leurs performance à l’aide de l’outil de profilage.
 
-|                   | ToGray()      |ToGray2() | 
+|  64x64 pixels     | ToGray()      |ToGray2() | 
 | :-----------:     |:-------------:| :-----:  | 
 | Temps (µs)        | 84,425        | 2,700    | 
 
@@ -96,9 +96,9 @@ L'application ne contient pas les versions renderscript de toutes les fonctions.
 Le language est difficile et j'ai passé plus de temps à faire fonctionner renderscript sur
 mon ordinateur.
 
-egalisationHistogramme(): le résultat n'est pas celui souhaité.
+`egalisationHistogramme()`: le résultat n'est pas celui souhaité.<br />
 
-filtreMoyenneur(): fait planter l'application.
+`filtreMoyenneur()`: fait planter l'application.
 
 ## Exemples
  
