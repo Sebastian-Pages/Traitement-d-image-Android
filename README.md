@@ -87,7 +87,7 @@ un pixel en prenant en compte ses voisins. Les filtres mis en place sont:<br />
 
 `filtreSobel3x3()` : Comme prexitt avec un pondération différente.
 
-`filtreMoyenneur()` : Cette version prend en paramètre la taille du filtre. (metre un entier impair
+`filtreMoyenneur()` : Cette version prend en paramètre la taille du filtre. (mettre un entier impair
 dans la zone text) 
 
 ## Limites & Bug
@@ -97,6 +97,7 @@ Le language est difficile et j'ai passé plus de temps à faire fonctionner rend
 mon ordinateur.
 
 egalisationHistogramme(): le résultat n'est pas celui souhaité.
+
 filtreMoyenneur(): fait planter l'application.
 
 ## Exemples
