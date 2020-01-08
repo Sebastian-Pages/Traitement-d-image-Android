@@ -68,7 +68,7 @@ RenderScript permet de faire des calculs en parrallèle. Nous avons optimiser ce
 
 |                   | ToGray2()      |ToGrayRS() | 
 | :-----------:     |:-------------:| :-----:  | 
-| Temps (µs)        | 2,700       | 0 | 
+| Temps (µs)        |       |  | 
 
 Je n'ai pas réussi à mesurer le temps d'éxécution de la version Renderscript avec l'outil de profilage. 
 La recherche ne permet pas de trouver la fonction.
