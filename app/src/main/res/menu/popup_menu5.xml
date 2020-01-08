@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/itemFiltreMoyeneur3x3"
+        android:title="Filtre Moyenneur"/>
+
+    <item android:id="@+id/itemPrewitt"
+        android:title="Filtre Prewitt"/>
+
+    <item android:id="@+id/itemSobel"
+        android:title="Filtre Sobel"/>
+
+    <item android:id="@+id/itemFiltreMoyeneur"
+        android:title="Filtre Moyenner Taille x"/>
+
+</menu>

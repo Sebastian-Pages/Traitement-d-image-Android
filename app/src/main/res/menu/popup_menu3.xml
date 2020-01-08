@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/itemContrasteExtensionLineaire"
+        android:title="Contraste par Extension Lineaire"/>
+
+    <item android:id="@+id/itemHsvContraste"
+        android:title="Contraste par HSV"/>
+
+    <item android:id="@+id/itemEgalisationHistogramme"
+        android:title="Egaliser Histogramme"/>
+
+    <item android:id="@+id/itemDisplayHistogramme"
+        android:title="Afficher Histogramme"/>
+</menu>

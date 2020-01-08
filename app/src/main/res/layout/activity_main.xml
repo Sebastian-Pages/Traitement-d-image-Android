@@ -15,67 +15,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtHello"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/buttonTP1"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="8dp"
+        android:onClick="showPopup"
+        android:text="TP1"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="8dp" /> />
 
     <Button
-        android:id="@+id/bGray"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonTP2"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="Gray"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:onClick="showPopup2"
+        android:text="TP2"
+        app:layout_constraintStart_toEndOf="@+id/buttonTP1"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Button
-        android:id="@+id/bColorize"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonTP3"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="Colorize"
-        app:layout_constraintStart_toEndOf="@+id/bGray"
-        tools:layout_editor_absoluteY="16dp" />
+        android:onClick="showPopup3"
+        android:text="TP3"
+        app:layout_constraintStart_toEndOf="@+id/buttonTP2"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Button
-        android:id="@+id/bRed"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonTP4"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="Red"
-        app:layout_constraintStart_toEndOf="@+id/bColorize"
-        tools:layout_editor_absoluteY="16dp" />
+        android:onClick="showPopup4"
+        android:text="TP4"
+        app:layout_constraintStart_toEndOf="@+id/buttonTP3"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Button
-        android:id="@+id/bContraste1"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonTP5"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="Contraste"
-        app:layout_constraintStart_toEndOf="@+id/bRed"
-        tools:layout_editor_absoluteY="16dp" />
+        android:onClick="showPopup5"
+        android:text="TP5"
+        app:layout_constraintStart_toEndOf="@+id/buttonTP4"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Button
-        android:id="@+id/bLowContraste"
+        android:id="@+id/buttonReset"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTP1" />
+
+    <EditText
+        android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lower Con."
-        app:layout_constraintTop_toBottomOf="@+id/bGray"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/mySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/buttonReset"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTP3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
